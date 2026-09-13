@@ -1,1 +1,253 @@
 key: 'PASTE_YOUR_KORA_PUBLIC_KEY_HERE',
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kora Services</title>
+<link rel="stylesheet" href="style.css">
+
+<script src="https://korablobstorage.blob.core.windows.net/modal-bucket/korapay-collections.min.js"></script>
+
+<style>
+.order{
+display:block;
+width:100%;
+border:0;
+cursor:pointer;
+padding:13px;
+border-radius:12px;
+background:#111;
+color:#fff;
+font-weight:700;
+font-size:15px;
+margin-top:12px;
+}
+
+.paybox{
+margin:25px 0;
+padding:25px;
+border-radius:20px;
+background:#111827;
+color:white;
+text-align:center;
+}
+
+.notice{
+font-size:13px;
+opacity:.75;
+margin-top:12px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">Kora<span>Services</span></div>
+<a href="https://wa.me/233547712495">
+Support: +233 547 712 495
+</a>
+</header>
+
+<main>
+
+<section class="hero">
+<small>FAST • SIMPLE • RELIABLE</small>
+
+<h1>
+Digital services<br>
+<span>made simple.</span>
+</h1>
+
+<p>
+Choose a service and pay securely with Kora Pay.
+</p>
+
+<a class="button" href="#services">
+View Services
+</a>
+</section>
+
+<section id="services">
+
+<small>OUR SERVICES</small>
+
+<h2>Choose what you need</h2>
+
+<div class="grid">
+
+<article>
+<b>♫</b>
+<h3>Apple Music</h3>
+<p>Apple Music service.</p>
+<strong>GH₵50</strong>
+<button class="order" onclick="pay('Apple Music',50)">
+Pay with Kora Pay
+</button>
+</article>
+
+<article>
+<b>☁</b>
+<h3>iCloud Storage</h3>
+<p>iCloud storage service.</p>
+<strong>GH₵70</strong>
+<button class="order" onclick="pay('iCloud Storage',70)">
+Pay with Kora Pay
+</button>
+</article>
+
+<article>
+<b>N</b>
+<h3>Netflix Login</h3>
+<p>Netflix login service.</p>
+<strong>GH₵50</strong>
+<button class="order" onclick="pay('Netflix Login',50)">
+Pay with Kora Pay
+</button>
+</article>
+
+<article>
+<b>N</b>
+<h3>Netflix Personal Account</h3>
+<p>Personal Netflix account.</p>
+<strong>GH₵100</strong>
+<button class="order" onclick="pay('Netflix Personal Account',100)">
+Pay with Kora Pay
+</button>
+</article>
+
+<article>
+<b>☎</b>
+<h3>Foreign Number</h3>
+<p>Foreign number service.</p>
+<strong>GH₵70</strong>
+<button class="order" onclick="pay('Foreign Number',70)">
+Pay with Kora Pay
+</button>
+</article>
+
+</div>
+</section>
+
+<section class="paybox">
+
+<h2>Secure Kora Pay</h2>
+
+<p>
+Payments are processed securely through Kora Pay Mobile Money.
+</p>
+
+<div class="notice">
+Choose a service above to start your payment.
+</div>
+
+</section>
+
+<section class="support">
+
+<h2>Need help?</h2>
+
+<p>
+WhatsApp <strong>+233 547 712 495</strong>.
+</p>
+
+<a class="button" href="https://wa.me/233547712495">
+WhatsApp Support
+</a>
+
+</section>
+
+</main>
+
+<footer>
+Kora<span>Services</span> · © 2026
+</footer>
+
+<script>
+
+function pay(service, price){
+
+const name = prompt("Enter your full name:");
+
+if(!name){
+return;
+}
+
+const email = prompt("Enter your email:");
+
+if(!email){
+return;
+}
+
+if(!window.Korapay){
+
+alert("Kora Pay is still loading. Please try again.");
+
+return;
+}
+
+const reference =
+"KS-" +
+Date.now() +
+"-" +
+Math.floor(Math.random() * 100000);
+
+window.Korapay.initialize({
+
+key: "PASTE_YOUR_KORA_TEST_PUBLIC_KEY_HERE",
+
+reference: reference,
+
+amount: price,
+
+currency: "GHS",
+
+customer: {
+name: name,
+email: email
+},
+
+channels: ["mobile_money"],
+
+default_channel: "mobile_money",
+
+narration: "Kora Services - " + service,
+
+metadata: {
+service: service
+},
+
+onSuccess: function(data){
+
+alert(
+"Payment successful!\n\n" +
+service +
+"\nAmount: GH₵" +
+price +
+"\nReference: " +
+(data.reference || reference)
+);
+
+},
+
+onFailed: function(){
+
+alert(
+"Payment failed.\nPlease try again."
+);
+
+},
+
+onClose: function(){
+
+}
+
+});
+
+}
+
+</script>
+
+</body>
+</html>
